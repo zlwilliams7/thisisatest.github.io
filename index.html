@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NYBluegrass • New York Bluegrass Guide</title>
+  <meta name="description" content="Find New York bluegrass jams, festivals, concerts, and workshops. Submit your event, discover weekly jams, and connect with the NY bluegrass community." />
+  <meta name="theme-color" content="#0f172a" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="NYBluegrass • New York Bluegrass Guide" />
+  <meta property="og:description" content="Find NY bluegrass jams, festivals, concerts, and workshops." />
+  <meta property="og:image" content="/og-image.jpg" />
+  <meta property="og:url" content="https://nybluegrass.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon placeholders (replace with real files when ready) -->
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Fonts (system stack) and minimal reset -->
+  <style>
+    :root{
+      --bg:#0b1020; --panel:#0f1730; --ink:#e6edf6; --muted:#9fb0c9; --accent:#22c55e; --accent-2:#60a5fa; --ring:#3b82f6;
+      --card:#0d1326; --border:#23304d;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji"; background:var(--bg); color:var(--ink);}
+    a{color:inherit}
+    .container{max-width:1100px;margin-inline:auto;padding:24px}
+    header{position:sticky;top:0;z-index:30;background:rgba(11,16,32,.75);backdrop-filter:saturate(150%) blur(8px);border-bottom:1px solid var(--border)}
+    .nav{display:flex;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .brand svg{width:28px;height:28px}
+    .spacer{flex:1}
+    .nav a{padding:10px 12px;border-radius:10px;color:var(--muted);text-decoration:none}
+    .nav a.active,.nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center;padding:42px 24px}
+    .hero h1{font-size:clamp(28px,4vw,48px);line-height:1.05;margin:0 0 12px}
+    .hero p{color:var(--muted);font-size:18px;margin:0 0 18px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));color:var(--ink);text-decoration:none;font-weight:600}
+    .btn.primary{border-color:transparent;background:linear-gradient(180deg, #16a34a, #15803d);}
+    .btn svg{width:18px;height:18px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);text-decoration:none;font-size:12px}
+
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+    .grid{display:grid;gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.grid.cols-3{grid-template-columns:1fr}.grid.cols-2{grid-template-columns:1fr}}
+
+    h2{margin:0 0 12px;font-size:26px}
+    h3{margin:0 0 10px;font-size:18px}
+    .muted{color:var(--muted)}
+    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;background:#0b142b;border:1px solid var(--border);padding:2px 8px;border-radius:8px}
+
+    .event{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center}
+    .date{display:grid;place-items:center;background:#0c1a32;border:1px solid var(--border);border-radius:12px;padding:8px 6px;min-width:64px}
+    .date .d{font-size:18px;font-weight:800}
+    .date .m{font-size:12px;color:var(--muted)}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+
+    .footer{margin-top:40px;padding:24px;border-top:1px solid var(--border);color:var(--muted);font-size:14px}
+    .chip{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px dashed var(--border);border-radius:999px}
+
+    /* Simple toast */
+    #toast{position:fixed;right:16px;bottom:16px;background:#0c172e;border:1px solid var(--border);padding:12px 14px;border-radius:12px;opacity:0;transform:translateY(8px);transition:all .25s ease;pointer-events:none}
+    #toast.show{opacity:1;transform:none}
+  </style>
+
+  <script type="application/ld+json" id="org-json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "NYBluegrass",
+    "url": "https://nybluegrass.com",
+    "logo": "https://nybluegrass.com/logo.png",
+    "sameAs": [
+      "https://instagram.com/nybluegrass",
+      "https://www.facebook.com/nybluegrass"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#top" class="brand" aria-label="NYBluegrass Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3l2.2 4.5 5 .7-3.6 3.6.9 5-4.5-2.3-4.5 2.3.9-5L4.8 8.2l5-.7L12 3z"/></svg>
+        <span>NYBluegrass</span>
+      </a>
+      <a href="#events">Events</a>
+      <a href="#jams">Jams</a>
+      <a href="#submit">Submit</a>
+      <a href="#about">About</a>
+      <span class="spacer"></span>
+      <a id="insta-link" class="pill" href="https://instagram.com/nybluegrass" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div>
+        <div class="pill" style="margin-bottom:10px">Community‑run • Updated often</div>
+        <h1>Your guide to bluegrass in New York</h1>
+        <p>Discover weekly jams, upcoming festivals, concerts, workshops, and pickin' parties across NYC and the Empire State. Submit your listing and help keep the scene thriving.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#events" aria-label="Browse events">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+            Browse Events
+          </a>
+          <a class="btn" href="#submit" aria-label="Submit an event">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+            Submit an Event
+          </a>
+          <a class="btn" href="#newsletter" aria-label="Join the newsletter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l8 6 8-6v12H4z"/></svg>
+            Join Newsletter
+          </a>
+        </div>
+        <p class="muted" style="margin-top:10px">Tip: press <span class="kbd">/</span> to search.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:8px">Quick search</h3>
+        <input id="search" type="search" placeholder="Search events, towns, venues… (e.g., Brooklyn, jam, workshop)" aria-label="Search" style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#0b142b;color:var(--ink);">
+        <div class="muted" style="margin-top:8px;font-size:12px">Data syncs from your Google Sheet (see <a href="#admin">Admin</a>).</div>
+      </div>
+    </section>
+
+    <section id="events" class="container">
+      <h2>Upcoming Events</h2>
+      <p class="muted" style="margin-top:0">Festivals • concerts • workshops • special jams</p>
+      <div id="events-grid" class="grid cols-3" role="list"></div>
+      <div style="margin-top:16px"><span class="chip">Can’t see your event? <a href="#submit" style="margin-left:6px">Submit it</a></span></div>
+    </section>
+
+    <section id="jams" class="container" style="margin-top:36px">
+      <div class="grid cols-2">
+        <div>
+          <h2>Weekly & Monthly Jams</h2>
+          <p class="muted">Browse the map or filter by borough/region. Add your jam below.</p>
+          <div id="jams-list" class="grid" style="gap:10px"></div>
+        </div>
+        <div class="card" aria-label="Jam map">
+          <iframe id="map" title="NY Bluegrass Jam Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:420px;border:0;border-radius:12px" src="https://www.google.com/maps/d/embed?mid=YOUR_MY_MAPS_ID"></iframe>
+          <div class="muted" style="margin-top:8px;font-size:12px">Replace the map URL with your Google My Maps share link.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="submit" class="container" style="margin-top:36px">
+      <h2>Submit a Listing</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Event / Festival / Concert</h3>
+          <p class="muted">Use this form for one‑off events and multi‑day festivals.</p>
+          <a class="btn primary" href="https://forms.gle/YOUR_EVENT_FORM" target="_blank" rel="noopener">Open Event Form</a>
+        </div>
+        <div class="card">
+          <h3>Jam / Recurring Meetup</h3>
+          <p class="muted">For weekly or monthly jams that happen on a schedule.</p>
+          <a class="btn" style="background:linear-gradient(180deg,#2563eb,#1e40af);border-color:transparent" href="https://forms.gle/YOUR_JAM_FORM" target="_blank" rel="noopener">Open Jam Form</a>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:10px">Prefer email? Send details to <a href="mailto:hello@nybluegrass.com">hello@nybluegrass.com</a>.</p>
+    </section>
+
+    <section id="newsletter" class="container" style="margin-top:36px">
+      <div class="grid cols-2">
+        <div>
+          <h2>Newsletter</h2>
+          <p class="muted">Monthly roundup of festivals, new jams, and last‑minute shows. Zero spam.</p>
+          <form id="mc-form" class="card" action="https://YOUR_MAILCHIMP_URL" method="post" target="_blank" novalidate>
+            <label for="mce-EMAIL" class="muted">Email address</label>
+            <input id="mce-EMAIL" name="EMAIL" type="email" required placeholder="you@example.com" style="width:100%;margin-top:6px;margin-bottom:10px;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#0b142b;color:var(--ink);">
+            <button class="btn primary" type="submit">Subscribe</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>Follow along</h3>
+          <p class="muted">We post last‑minute picks and jam reminders.</p>
+          <div class="grid">
+            <a class="btn" href="https://instagram.com/nybluegrass" target="_blank" rel="noopener">Instagram</a>
+            <a class="btn" href="https://youtube.com/@nybluegrass" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="container" style="margin-top:36px">
+      <div class="grid cols-2">
+        <div>
+          <h2>About NYBluegrass</h2>
+          <p>NYBluegrass is a volunteer guide to bluegrass across New York. It’s built by players, presenters, and fans. Listings are free; accuracy improves when you submit updates.</p>
+          <ul class="muted">
+            <li>Focus: Bluegrass, old‑time, and adjacent acoustic events in NYC and NY State.</li>
+            <li>What we list: festivals, concerts, workshops, and public jams.</li>
+            <li>Turnaround: updates usually within 24–72 hours.</li>
+          </ul>
+          <div class="chip" style="margin-top:8px">Contact: <a href="mailto:hello@nybluegrass.com" style="margin-left:6px">hello@nybluegrass.com</a></div>
+        </div>
+        <div class="card" id="admin">
+          <h3>Admin / Data Sources</h3>
+          <p class="muted">This site reads from a Google Sheet you control. Publish it to the web as CSV and paste the link below.</p>
+          <label for="sheet-url" class="muted">Google Sheet (published CSV) URL</label>
+          <input id="sheet-url" type="url" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?gid=0&single=true&output=csv" style="width:100%;margin-top:6px;margin-bottom:8px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:#0b142b;color:var(--ink);">
+          <button class="btn" id="save-sheet">Save</button>
+          <p class="muted" style="font-size:12px;margin-top:8px">We store this locally in your browser (no server required).
+          </p>
+          <details style="margin-top:8px">
+            <summary><strong>Expected columns</strong></summary>
+            <ul class="muted" style="margin-top:6px">
+              <li><code>type</code> (festival | concert | workshop | jam)</li>
+              <li><code>name</code>, <code>date</code> (YYYY-MM-DD or range), <code>time</code> (optional)</li>
+              <li><code>city</code>, <code>region</code> (NYC, Hudson Valley, WNY, etc.)</li>
+              <li><code>venue</code> (optional), <code>address</code> (optional), <code>lat</code>, <code>lng</code> (optional)</li>
+              <li><code>url</code>, <code>tickets</code> (optional), <code>notes</code> (optional)</li>
+              <li>For jams: <code>recurrence</code> (e.g., 1st & 3rd Thu), <code>level</code> (open, intermediate, etc.)</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="margin-top:36px">
+      <div class="card">
+        <h3>Attribution</h3>
+        <p class="muted">Built with love by the community. Content © respective organizers. This single‑file site can be dropped into GitHub Pages as <code>index.html</code>.</p>
+      </div>
+    </section>
+
+    <div id="toast" role="status" aria-live="polite">Saved.</div>
+  </main>
+
+  <footer class="footer container">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <span>© <span id="year"></span> NYBluegrass</span>
+      <span class="muted">•</span>
+      <a class="muted" href="/privacy.html">Privacy</a>
+      <span class="muted">•</span>
+      <a class="muted" href="mailto:hello@nybluegrass.com">Contact</a>
+      <span class="spacer"></span>
+      <span class="muted">Made for pickers, by pickers.</span>
+    </div>
+  </footer>
+
+  <script>
+    // === Simple config (edit as needed) ===
+    const CONFIG = {
+      instagram: 'https://instagram.com/nybluegrass',
+      youtube: 'https://youtube.com/@nybluegrass',
+      sheetCSV: localStorage.getItem('nybg_sheet') || '',
+      // Optional: fallback demo data if sheet isn't set yet
+      demoCSV: `type,name,date,time,city,region,venue,url,tickets,notes,recurrence,level,lat,lng\n`+
+               `festival,Winter Village Music Camp,2025-01-24,,Ithaca,Central NY,La Tourelle,https://example.com,,Workshops + concerts,,,\n`+
+               `concert,Bluegrass Night,2025-09-10,19:30,Brooklyn,NYC,Union Pool,https://example.com/tix,https://example.com/tix,With special guests,,,\n`+
+               `jam,Prospect Park Old-Time Jam,2025-08-21,18:00,Brooklyn,NYC,Nethermead,,,'Bring a chair',2nd & 4th Thu,Open,,\n`+
+               `workshop,Flatpicking Intensive,2025-10-05,11:00,Manhattan,NYC,Irish Arts Center,https://example.com,,Limited spots,,,`
+    };
+
+    document.getElementById('insta-link').href = CONFIG.instagram;
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Admin controls (save Google Sheet URL)
+    const sheetInput = document.getElementById('sheet-url');
+    const saveBtn = document.getElementById('save-sheet');
+    sheetInput.value = CONFIG.sheetCSV;
+    saveBtn?.addEventListener('click', () => {
+      const url = sheetInput.value.trim();
+      if(!/^https?:\/\//.test(url)) { alert('Please paste a valid published CSV URL.'); return; }
+      localStorage.setItem('nybg_sheet', url);
+      toast('Saved Google Sheet URL. Reloading…');
+      setTimeout(()=>location.reload(), 600);
+    });
+
+    // Keyboard shortcut for search
+    const search = document.getElementById('search');
+    window.addEventListener('keydown', (e)=>{ if(e.key==='/' && document.activeElement!==search){ e.preventDefault(); search.focus(); } });
+
+    // Fetch CSV from Google Sheets (published) or demo
+    async function loadCSV(){
+      const url = CONFIG.sheetCSV || null;
+      try{
+        const res = await fetch(url || 'data:text/csv,' + encodeURIComponent(CONFIG.demoCSV));
+        const txt = await res.text();
+        return parseCSV(txt);
+      }catch(err){
+        console.warn('CSV load failed, using demo', err);
+        return parseCSV(CONFIG.demoCSV);
+      }
+    }
+
+    // Minimal CSV parser (no quotes-in-quotes; sufficient for our simple sheet)
+    function parseCSV(text){
+      const lines = text.split(/\r?\n/).filter(Boolean);
+      const headers = lines.shift().split(',').map(h=>h.trim());
+      return lines.map(line=>{
+        const cols = splitCSV(line);
+        const obj = {}; headers.forEach((h,i)=>obj[h]=cols[i]??'');
+        return obj;
+      });
+    }
+    function splitCSV(line){
+      const out=[]; let cur=''; let q=false; for(let i=0;i<line.length;i++){
+        const c=line[i];
+        if(c==='"'){ q=!q; continue; }
+        if(c===',' && !q){ out.push(cur); cur=''; } else { cur+=c; }
+      } out.push(cur); return out.map(s=>s.trim());
+    }
+
+    // Render helpers
+    function monthShort(d){ return d.toLocaleString(undefined,{month:'short'}); }
+    function pad(n){ return String(n).padStart(2,'0'); }
+    function dateParts(str){
+      // supports YYYY-MM-DD or ranges like 2025-08-20–2025-08-22
+      if(!str) return null;
+      const range = String(str).replace(/\u2013|\u2014/g,'-').split('-').length>3 ? str.split(/[\u2013\-]{1,2}/) : null;
+      if(range && range.length===6){
+        const [y1,m1,d1,y2,m2,d2] = range.map(Number);
+        return {start:new Date(y1,m1-1,d1), end:new Date(y2,m2-1,d2)};
+      }
+      if(/^\d{4}-\d{2}-\d{2}$/.test(str)){
+        const [y,m,d] = str.split('-').map(Number); return {start:new Date(y,m-1,d)};
+      }
+      // fallback: try Date
+      const d = new Date(str); return isNaN(d)?null:{start:d};
+    }
+
+    function makeEventCard(e){
+      const dates = dateParts(e.date);
+      const start = dates?.start || new Date();
+      const d = start.getDate(); const m = monthShort(start);
+      const typeTag = e.type ? `<span class="tag">${e.type}</span>` : '';
+      const regionTag = e.region ? `<span class="tag">${e.region}</span>` : '';
+      const noteTag = e.recurrence ? `<span class="tag">${e.recurrence}</span>` : '';
+      const url = e.url || e.tickets || '#';
+      return `
+        <article class="card event" role="listitem">
+          <div class="date"><div class="d">${d}</div><div class="m">${m}</div></div>
+          <div>
+            <h3 style="margin:0 0 4px;font-size:17px">${e.name || 'Untitled Event'}</h3>
+            <div class="muted" style="font-size:13px">${[e.venue,e.city].filter(Boolean).join(' • ')}</div>
+            <div class="tags" style="margin-top:8px">${typeTag}${regionTag}${noteTag}</div>
+          </div>
+          <div>
+            <a class="btn" href="${url}" target="_blank" rel="noopener">Details</a>
+          </div>
+        </article>`;
+    }
+
+    function renderLists(rows){
+      const now = new Date();
+      const events = rows.filter(r=> (r.type||'').toLowerCase()!=='jam');
+      const jams = rows.filter(r=> (r.type||'').toLowerCase()==='jam');
+
+      // sort by date ascending
+      events.sort((a,b)=>{
+        const da = dateParts(a.date)?.start?.getTime() || 0;
+        const db = dateParts(b.date)?.start?.getTime() || 0;
+        return da - db;
+      });
+
+      // upcoming only (>= today - 1 day)
+      const upcoming = events.filter(e=> (dateParts(e.date)?.start || now) >= new Date(now.getFullYear(),now.getMonth(),now.getDate()-1));
+
+      document.getElementById('events-grid').innerHTML = upcoming.map(makeEventCard).join('') || `<div class="card">Nothing on the calendar yet. <a href="#submit">Add one</a>!</div>`;
+
+      // jams list (compact)
+      const jamItems = jams.map(j=>{
+        const badge = j.level?`<span class="tag">${j.level}</span>`:'';
+        const recur = j.recurrence?`<span class="tag">${j.recurrence}</span>`:'';
+        const where = [j.venue,j.city].filter(Boolean).join(' • ');
+        const url = j.url || '#';
+        return `<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+          <div>
+            <strong>${j.name||'Jam'}</strong>
+            <div class="muted" style="font-size:13px">${where}</div>
+            <div class="tags" style="margin-top:6px">${badge}${recur}</div>
+          </div>
+          <a class="btn" href="${url}" target="_blank" rel="noopener">Info</a>
+        </div>`;
+      }).join('');
+      document.getElementById('jams-list').innerHTML = jamItems || `<div class="card">Know a jam? <a href="#submit">Add it</a>.</div>`;
+    }
+
+    // Search filter (client-side)
+    function enableSearch(rows){
+      function filter(q){
+        q = q.toLowerCase();
+        const includes = (s)=> String(s||'').toLowerCase().includes(q);
+        const filtered = rows.filter(r=> [r.name,r.city,r.region,r.venue,r.type,r.notes,r.recurrence].some(includes));
+        renderLists(filtered);
+      }
+      search.addEventListener('input', (e)=>filter(e.target.value));
+    }
+
+    // Toast helper
+    function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1800); }
+
+    // Boot
+    (async function(){
+      const rows = await loadCSV();
+      renderLists(rows);
+      enableSearch(rows);
+    })();
+  </script>
+
+  <!-- Optional: simple pageview (replace with your own analytics) -->
+  <script>
+    // window.plausible = window.plausible || function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}
+    // plausible("pageview");
+  </script>
+</body>
+</html>
